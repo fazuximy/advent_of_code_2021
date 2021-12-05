@@ -48,6 +48,8 @@ import pandas as pd
 # Consider only horizontal and vertical lines. At how many points do at least two lines overlap?
 
 
+
+# Defining path and file
 path = r"Z:\python_stuff\advent_of_code_2021\days\5\\"
 file = "input.XSCORE.txt"
 
@@ -56,13 +58,18 @@ vent_line_file = open(path+file, "r")
 vent_line_report = vent_line_file.read()
 # Splitting the text file into rows
 vent_line_list = vent_line_report.split("\n")
+# Closing file
 vent_line_file.close()
 
+# Seperate coordinates into lists
 vent_line_list_sep = [[j.split(",") for j in i.split(" -> ")] for i in vent_line_list][:-1]
 
+# The x and y value for the coordinate 1
 vent_line_list_1 = [i[0] for i in vent_line_list_sep]
+# The x and y value for the coordinate 2
 vent_line_list_2 = [i[1] for i in vent_line_list_sep]
 
+# Finding the value between coordinate 1 and 2 and seperate them into x and y coordinates
 x_list = []
 y_list = []
 for i in range(len(vent_line_list_1)):
@@ -82,18 +89,21 @@ for i in range(len(vent_line_list_1)):
     else:
         y_list.append([int(vent_line_list_2[i][1])])
 
-
+# Finding the vertical lines
 vertical_lines = [j for j,i in enumerate(x_list) if len(i) == 1]
 
+# Finding the horizontal lines
 horizontal_lines = [j for j,i in enumerate(y_list) if len(i) == 1]
 
+# Combining the horizontal and vertical lines into the relevant lines
 relevant_lines = pd.Series(vertical_lines + horizontal_lines).unique()
 
-
+# Finding the relevant x coordinates
 relevant_x_list = [x_list[i] for i in relevant_lines]
-
+# Finding the relevant y coordinates
 relevant_y_list = [y_list[i] for i in relevant_lines]
 
+# Creating the entire line for the relevant coordinates
 relevant_final_lines = []
 for i in range(len(relevant_x_list)):
     if len(relevant_x_list[i]) > len(relevant_y_list[i]):
@@ -107,9 +117,10 @@ for i in range(len(relevant_x_list)):
     else:
         relevant_final_lines.append([str(relevant_x_list[i][0]) + "," + str(relevant_y_list[i][0])])
         
-
+# Flatten all the values for the relevant lines
 flat_final_lines = [element for sublist in relevant_final_lines for element in sublist]     
 
+# Finding the number of unique overlapping of the relevant lines (at least two lines overlap)
 final_lines_series = pd.Series(flat_final_lines)
 overlapping_points = len(final_lines_series[final_lines_series.duplicated()].unique())
 
@@ -140,11 +151,13 @@ print("The Answer to Day 5 Part One: \nConsidering the horizontal and vertical l
 
 # Consider all of the lines. At how many points do at least two lines overlap?
 
-
+# Talking all the x coordinates for all lines
 all_x_list = [i for i in x_list]
 
+# Talking all the y coordinates for all lines
 all_y_list = [i for i in y_list]
 
+# Creating the entire list for the lines (getting all the coordinates of the lists)
 all_final_lines = []
 for i in range(len(all_x_list)):
     if len(all_x_list[i]) > len(all_y_list[i]):
@@ -161,8 +174,10 @@ for i in range(len(all_x_list)):
         else:
             all_final_lines.append([str(all_x_list[i][j])+","+str(all_y_list[i][j]) for j in range(len(all_y_list[i]))])
 
+# Flatten all the coordinates
 flat_all_final_lines = [element for sublist in all_final_lines for element in sublist]     
 
+# Finding the number of unique overlapping of all the lines (at least two lines overlap)
 final_all_lines_series = pd.Series(flat_all_final_lines)
 all_overlapping_points = len(final_all_lines_series[final_all_lines_series.duplicated()].unique())
 
