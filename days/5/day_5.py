@@ -68,17 +68,17 @@ y_list = []
 for i in range(len(vent_line_list_1)):
     
     if int(vent_line_list_2[i][0]) < int(vent_line_list_1[i][0]):
-        x_list.append(list(range(int(vent_line_list_2[i][0]),int(vent_line_list_1[i][0])+1)))
+        x_list.append(list(range(int(vent_line_list_1[i][0]),int(vent_line_list_2[i][0])-1,-1)))
     elif int(vent_line_list_2[i][0]) > int(vent_line_list_1[i][0]):
-        x_list.append(list(range(int(vent_line_list_1[i][0])*,int(vent_line_list_2[i][0])+1)))
+        x_list.append(list(range(int(vent_line_list_1[i][0]),int(vent_line_list_2[i][0])+1,1)))
     else:
         x_list.append([int(vent_line_list_2[i][0])])
     
     
     if int(vent_line_list_2[i][1]) < int(vent_line_list_1[i][1]):
-        y_list.append(list(range(int(vent_line_list_2[i][1]),int(vent_line_list_1[i][1])+1)))
+        y_list.append(list(range(int(vent_line_list_1[i][1]),int(vent_line_list_2[i][1])-1,-1)))
     elif int(vent_line_list_2[i][1]) > int(vent_line_list_1[i][1]):
-        y_list.append(list(range(int(vent_line_list_1[i][1]),int(vent_line_list_2[i][1])+1)))
+        y_list.append(list(range(int(vent_line_list_1[i][1]),int(vent_line_list_2[i][1])+1,1)))
     else:
         y_list.append([int(vent_line_list_2[i][1])])
 
@@ -140,29 +140,6 @@ print("The Answer to Day 5 Part One: \nConsidering the horizontal and vertical l
 
 # Consider all of the lines. At how many points do at least two lines overlap?
 
-x_list = []
-y_list = []
-
-for i in range(len(vent_line_list_1)):
-    
-    if int(vent_line_list_2[i][0]) < int(vent_line_list_1[i][0]):
-        x_list.append(list(range(int(vent_line_list_1[i][0]),int(vent_line_list_2[i][0])-1,-1)))
-    elif int(vent_line_list_2[i][0]) > int(vent_line_list_1[i][0]):
-        x_list.append(list(range(int(vent_line_list_1[i][0]),int(vent_line_list_2[i][0])+1,1)))
-    else:
-        x_list.append([int(vent_line_list_2[i][0])])
-    
-    
-    if int(vent_line_list_2[i][1]) < int(vent_line_list_1[i][1]):
-        y_list.append(list(range(int(vent_line_list_1[i][1]),int(vent_line_list_2[i][1])-1,-1)))
-    elif int(vent_line_list_2[i][1]) > int(vent_line_list_1[i][1]):
-        y_list.append(list(range(int(vent_line_list_1[i][1]),int(vent_line_list_2[i][1])+1,1)))
-    else:
-        y_list.append([int(vent_line_list_2[i][1])])
-        
-    if i == 553:
-        print(vent_line_list_2[i][0]),int(vent_line_list_1[i][0])
-
 
 all_x_list = [i for i in x_list]
 
@@ -182,7 +159,6 @@ for i in range(len(all_x_list)):
         if len(all_y_list[i]) == 1:
             all_final_lines.append([str(all_x_list[i][0]) + "," + str(all_y_list[i][0])])
         else:
-            print([str(all_x_list[i][j])+","+str(all_y_list[i][j]) for j in range(len(all_y_list[i]))])
             all_final_lines.append([str(all_x_list[i][j])+","+str(all_y_list[i][j]) for j in range(len(all_y_list[i]))])
 
 flat_all_final_lines = [element for sublist in all_final_lines for element in sublist]     
